@@ -1,11 +1,14 @@
 import express from 'express';
 import { promises as fs } from 'fs';
+import bodyParser from 'body-parser';
 import { people } from './people.js';
 
 let app = express();
 
+app.use(bodyParser.json());
+
 app.get('/hello', (req, res) => {
-    res.send('Hello World');
+    res.send('Hey World');
 });
 
 app.get('/people', (req, res) => {
@@ -29,6 +32,12 @@ app.get('/file-data', async (req, res) => {
         console.error(error);
         res.status(500).send('Error reading file')
     }
+});
+
+app.post('/people', (req, res) => {
+    let person = req.body;
+    people.push(person);
+    res.json(people);
 });
 
 app.listen(3000, () => {
