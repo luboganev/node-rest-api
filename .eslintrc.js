@@ -21,8 +21,12 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
+    plugins: [
+        'immutable',
+    ],
     rules: {
         'no-console': 'off',
         indent: ['error', 4],
+        'immutable/no-mutation': 'error',
     },
 };
