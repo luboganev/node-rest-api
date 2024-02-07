@@ -1,4 +1,5 @@
 import express from 'express';
+import { promises as fs } from 'fs';
 import { people } from './people.js';
 
 let app = express();
@@ -17,6 +18,16 @@ app.get('/people/:name', (req, res) => {
         res.json(person);
     } else {
         res.status(404).send('Person not found');
+    }
+});
+
+app.get('/file-data', async (req, res) => {
+    try {
+        let data = await fs.readFile(__dirname + '/people-data.json', 'utf-8');
+        res.send(JSON.parse(data));
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error reading file')
     }
 });
 
